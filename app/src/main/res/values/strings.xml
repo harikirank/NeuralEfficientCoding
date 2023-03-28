@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Neurosense</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="error">Error finding image</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="sense">sense</string>
+    <string name="neuro">neuro</string>
+    <string name="brief_description_neuroscience">Whether you’re a high level researcher or a member of the general public, neurosense can show you new ways of understanding the brain.</string>
+    <string name="welcome">Welcome!</string>
+    <string name="exit_text">ⓧ</string>
+    <string name="access_again">You can access the following explanation again through the \"About App\" button in the menu</string>
+
+</resources>
