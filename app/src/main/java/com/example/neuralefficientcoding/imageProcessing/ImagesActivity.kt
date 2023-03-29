@@ -172,10 +172,12 @@ class ImagesActivity : AppCompatActivity() {
         val imageURI = data?.data
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
             processAndSetImage()
+
+            showProcessingButtonsAndViews()
         } else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             binding.imageSelectedImagePreview.setImageURI(imageURI)
 
-            processAndSetImage()
+            showProcessingButtonsAndViews()
         } else {
             if (currentImagePath != null) {
                 BitmapUtils.deleteImageFile(this, currentImagePath)
@@ -184,7 +186,10 @@ class ImagesActivity : AppCompatActivity() {
     }
 
     private fun showProcessingButtonsAndViews() {
-        showProcessingButtonsAndViews()
+        binding.processImage.visibility = View.VISIBLE
+        binding.textViewCloser.visibility = View.VISIBLE
+        binding.imageSelectedImagePreview.visibility = View.VISIBLE
+        binding.buttonProcessImage.visibility = View.VISIBLE
     }
     private fun processAndSetImage() {
         val resultBitmap = BitmapUtils.resamplePic(this, currentImagePath)
