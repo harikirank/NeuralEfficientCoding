@@ -5,4 +5,8 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="dark_blue">#1d6066</color>
     <color name="dark_blue_variant_2">#317173</color>
+    <color name="white">#FFFFFF</color>
+    <color name="light_blue_variant">#A4CFCB</color>
+    <color name="white_variant">#FAFAFA</color>
+    <color name="black">#000000</color>
 </resources>
