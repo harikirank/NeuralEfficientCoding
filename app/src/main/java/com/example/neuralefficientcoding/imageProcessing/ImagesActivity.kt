@@ -172,19 +172,10 @@ class ImagesActivity : AppCompatActivity() {
         val imageURI = data?.data
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
             processAndSetImage()
-
-            binding.processImage.visibility = View.VISIBLE
-            binding.textViewCloser.visibility = View.VISIBLE
-            binding.imageSelectedImagePreview.visibility = View.VISIBLE
-            binding.buttonProcessImage.visibility = View.VISIBLE
-
         } else if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             binding.imageSelectedImagePreview.setImageURI(imageURI)
 
-            binding.processImage.visibility = View.VISIBLE
-            binding.textViewCloser.visibility = View.VISIBLE
-            binding.imageSelectedImagePreview.visibility = View.VISIBLE
-            binding.buttonProcessImage.visibility = View.VISIBLE
+            processAndSetImage()
         } else {
             if (currentImagePath != null) {
                 BitmapUtils.deleteImageFile(this, currentImagePath)
@@ -192,6 +183,9 @@ class ImagesActivity : AppCompatActivity() {
         }
     }
 
+    private fun showProcessingButtonsAndViews() {
+        showProcessingButtonsAndViews()
+    }
     private fun processAndSetImage() {
         val resultBitmap = BitmapUtils.resamplePic(this, currentImagePath)
         binding.imageSelectedImagePreview.setImageBitmap(resultBitmap)
@@ -230,7 +224,7 @@ class ImagesActivity : AppCompatActivity() {
         private fun heavyProcessImage() {
             val drawable = binding.imageSelectedImagePreview.drawable as BitmapDrawable
             val bitmap = drawable.bitmap
-            patchData = imagePatches.get_patches(50000, 8, bitmap)
+            patchData = imagePatches.get_patches(100, 8, bitmap)
             val fastICA = FastICA()
             try {
                 fastICA.fit(imagePatches.transpose(patchData), 25)
@@ -241,7 +235,7 @@ class ImagesActivity : AppCompatActivity() {
             val test = imagePatches.showPatches(imagePatches.transpose(mixing), 25)
             if (test == null) Log.d("NULL", "Bitmap is Null")
             val testBit = (binding.imageSelectedImagePreview.drawable as BitmapDrawable).bitmap
-            val imageURI: Uri = getImageUri(baseContext, test)
+            val imageURI: Uri = getImageUri(this@ImagesActivity, test)
 
             runOnUiThread {
                 binding.imageSelectedImagePreview.setImageURI(imageURI)
@@ -251,7 +245,7 @@ class ImagesActivity : AppCompatActivity() {
 
     private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
         val path =
             MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
         return Uri.parse(path)
