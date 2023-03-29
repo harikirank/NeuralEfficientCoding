@@ -121,7 +121,7 @@ class ImagesActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun notAllThreePermissionsGranted(): Boolean {
-        return !(ContextCompat.checkSelfPermission(this,
+        return (ContextCompat.checkSelfPermission(this,
             Manifest.permission.READ_MEDIA_IMAGES)
                 != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
             Manifest.permission.READ_MEDIA_AUDIO)
