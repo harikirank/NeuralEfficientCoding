@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ImageProcessed">
+    tools:context=".imageProcessing.ImageProcessed">
 
 
     <TextView
-        android:id="@+id/backgroundColor_imageActivity"
+        android:id="@+id/backgroundColor_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/app_background_color"
@@ -54,7 +54,7 @@
         android:textColor="#FFFFFF"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/backgroundColor_imageActivity"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundColor_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
         android:textColor="#A4CFCB"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/backgroundColor_imageActivity"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundColor_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView7"
@@ -86,11 +86,11 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/backgroundColor_imageActivity"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundColor_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/backgroundColor_imageActivity"
+        app:layout_constraintTop_toTopOf="@+id/backgroundColor_header"
         app:layout_constraintVertical_bias="1.07" />
 
     <TextView
@@ -103,11 +103,11 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@+id/backgroundColor_imageActivity"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundColor_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.834"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/backgroundColor_imageActivity"
+        app:layout_constraintTop_toTopOf="@+id/backgroundColor_header"
         app:layout_constraintVertical_bias="0.505" />
 
     <ImageView
