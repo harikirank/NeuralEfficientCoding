@@ -20,6 +20,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomePageActivity" />
+        <activity android:name=".imageProcessing.ImageProcessed"/>
+        <activity android:name=".about.AboutPage1Activity"/>
+        <activity android:name=".imageProcessing.ImagesActivity"/>
+        <activity android:name=".about.AppInfoActivity"/>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.neuralefficientcoding.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
