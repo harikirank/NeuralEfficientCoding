@@ -74,7 +74,14 @@ class ImagesActivity : AppCompatActivity() {
         }
 
         binding.buttonSelectImage.setOnClickListener {
-            launchImagePickingIntent()
+            if (notAllThreePermissionsGranted()
+            ) {
+                ActivityCompat.requestPermissions(this,
+                    permissions(),
+                    1)
+            } else {
+                launchImagePickingIntent()
+            }
         }
 
         binding.textViewCloser.setOnClickListener {
@@ -191,6 +198,7 @@ class ImagesActivity : AppCompatActivity() {
         binding.imageSelectedImagePreview.visibility = View.VISIBLE
         binding.buttonProcessImage.visibility = View.VISIBLE
     }
+
     private fun processAndSetImage() {
         val resultBitmap = BitmapUtils.resamplePic(this, currentImagePath)
         binding.imageSelectedImagePreview.setImageBitmap(resultBitmap)
