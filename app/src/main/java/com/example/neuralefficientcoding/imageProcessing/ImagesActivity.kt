@@ -30,7 +30,6 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 
-
 const val REQUEST_IMAGE_CAPTURE = 96
 const val RESULT_LOAD_IMAGE = 169
 const val FILE_PROVIDER_AUTHORITY = "com.example.neuralefficientcoding.fileprovider"
@@ -44,38 +43,27 @@ class ImagesActivity : AppCompatActivity() {
     var patchData: Array<DoubleArray>? = null
     var mixing: Array<DoubleArray>? = null
 
-    @RequiresApi(Build.VERSION_CODES.N)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image)
-        hideActionBar()
-
         val value = intent.getStringExtra("key")
         appExecutor = AppExecutor()
 
-        binding.buttonProcessImage.visibility = View.GONE
-        binding.processImage.visibility = View.GONE
-        binding.textViewCloser.visibility = View.GONE
+        hideActionBar()
+        hideProcessingButtonsAndViews()
 
         binding.buttonBack.setOnClickListener {
-            finish()
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            finishCurrentActivity()
         }
 
         binding.buttonHome.setOnClickListener {
-            finish()
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            finishCurrentActivity()
         }
 
         binding.buttonTakePicture.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_MEDIA_IMAGES)
-                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_MEDIA_AUDIO)
-                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_MEDIA_VIDEO)
-                != PackageManager.PERMISSION_GRANTED
+            if (notAllThreePermissionsGranted()
             ) {
                 ActivityCompat.requestPermissions(this,
                     permissions(),
@@ -86,8 +74,7 @@ class ImagesActivity : AppCompatActivity() {
         }
 
         binding.buttonSelectImage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(intent, RESULT_LOAD_IMAGE)
+            launchImagePickingIntent()
         }
 
         binding.textViewCloser.setOnClickListener {
@@ -110,16 +97,30 @@ class ImagesActivity : AppCompatActivity() {
         }
     }
 
-    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path =
-            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
-    }
-
     private fun hideActionBar() {
         supportActionBar?.hide()
+    }
+
+    private fun hideProcessingButtonsAndViews() {
+        binding.buttonProcessImage.visibility = View.GONE
+        binding.processImage.visibility = View.GONE
+        binding.textViewCloser.visibility = View.GONE
+    }
+
+    private fun finishCurrentActivity() {
+        finish()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun notAllThreePermissionsGranted(): Boolean {
+        return !(ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_MEDIA_IMAGES)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_MEDIA_AUDIO)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_MEDIA_VIDEO)
+                != PackageManager.PERMISSION_GRANTED)
     }
 
     private fun launchCamera() {
@@ -137,6 +138,11 @@ class ImagesActivity : AppCompatActivity() {
             intentCaptureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri)
             startActivityForResult(intentCaptureImage, REQUEST_IMAGE_CAPTURE)
         }
+    }
+
+    private fun launchImagePickingIntent() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, RESULT_LOAD_IMAGE)
     }
 
     private var storagePermissions = arrayOf(
@@ -241,6 +247,14 @@ class ImagesActivity : AppCompatActivity() {
                 binding.imageSelectedImagePreview.setImageURI(imageURI)
             }
         }
+    }
+
+    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path =
+            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
     }
 
 }
