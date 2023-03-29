@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.neuralefficientcoding.about.AboutPage1Activity
 import com.example.neuralefficientcoding.about.AppInfoActivity
 import com.example.neuralefficientcoding.databinding.ActivityHomepageBinding
+import com.example.neuralefficientcoding.imageProcessing.ImagesActivity
 
 class HomePageActivity : AppCompatActivity() {
     private lateinit var homePageBinding: ActivityHomepageBinding
@@ -18,7 +19,8 @@ class HomePageActivity : AppCompatActivity() {
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_homepage)
 
         homePageBinding.buttonImages.setOnClickListener {
-
+            startActivity(Intent(this, ImagesActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         homePageBinding.buttonSounds.setOnClickListener {
